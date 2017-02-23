@@ -1,0 +1,28 @@
+<table>
+  <thead>
+    <tr>
+      <th>
+        Produktname
+      </th>
+      <th>
+        Preis
+      </th>
+      <th>
+        Datum
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let product of products">
+      <td>
+        {{product.m_produktname}}
+      </td>
+      <td>
+        {{product.m_price}}
+      </td>
+      <td>
+        {{product.m_timestamp}}
+      </td>
+    </tr>
+  </tbody>
+</table>

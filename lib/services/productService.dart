@@ -4,11 +4,19 @@ import 'dart:convert';
 import 'package:angular2/core.dart';
 import 'package:http/http.dart';
 
-import 'package:webHaushaltsbuch/objects/product.dart';
+import '../objects/product.dart';
+
+final List<Product> productsDBTemp=[];
 
 @Injectable()
 class ProductService
 {
+  Future<List<Product>> getProducts()async =>(await productsDBTemp);
+  void onInsert(Product newProduct)
+  {
+    productsDBTemp.add(newProduct);
+  }
+  /*
   static final _productsUrl = 'server/productsJson';
   Future<List<Product>> getProducts() async
   {
@@ -31,4 +39,5 @@ class ProductService
     print(e);
     return new Exception('Server error; cause: $e');
   }
+  */
 }
