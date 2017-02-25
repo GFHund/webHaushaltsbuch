@@ -6,7 +6,10 @@ import 'package:http/http.dart';
 
 import '../objects/product.dart';
 
-final List<Product> productsDBTemp=[];
+final List<Product> productsDBTemp=[
+  new Product("Test",2.5,1488024756),
+  new Product("product2", 3.7, 1488024756)
+];
 
 @Injectable()
 class ProductService
