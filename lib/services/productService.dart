@@ -1,8 +1,9 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:html';
 
 import 'package:angular2/core.dart';
-import 'package:http/http.dart';
+//import 'package:http/http.dart';
 
 import '../objects/product.dart';
 
@@ -14,10 +15,41 @@ final List<Product> productsDBTemp=[
 @Injectable()
 class ProductService
 {
-  Future<List<Product>> getProducts()async =>(await productsDBTemp);
+    Future<List<Product>> getProducts()async {
+    //return (await productsDBTemp);
+
+    var url ="http://127.0.0.1/server/getProducts.php";
+    var requestResult = await HttpRequest.getString(url);
+    var decodedJsonString = JSON.decode(requestResult)['Products'];
+    List<Product> ret = new List<Product>();
+    for(int i=0;i<decodedJsonString.length;i++)
+    {
+      ret.add(new Product.fromJson(decodedJsonString[i]));
+    }
+    return ret;
+  }
+
+  Future<Product> getProduct()async{
+    var url ="http://127.0.0.1/server/getProduct.php";
+    var requestResult = await HttpRequest.getString(url);
+    var decodedJsonString = JSON.decode(requestResult);
+    return new Product.fromJson(decodedJsonString);
+  }
+
   void onInsert(Product newProduct)
   {
     productsDBTemp.add(newProduct);
+
+    HttpRequest request = new HttpRequest();
+    request.onReadyStateChange.listen((_){
+      if(request.readyState == HttpRequest.DONE && (request.status == 200 || request.status == 0)){
+        //aaaa
+      }
+    });
+    var url ="http://127.0.0.1/server/insertProduct.php";
+    request.open("POST",url,async: false);
+    String json = newProduct.toJson();
+    request.send(json);
   }
   /*
   static final _productsUrl = 'server/productsJson';

@@ -31,6 +31,14 @@ class dbConnection
       throw new dbException(mysqli_error($this->oMysqlHandler),$sSQLString);
     }
   }
+  public function insertProduct($product){
+    $sSQLString = 'INSERT INTO productPriceTable(product_name,price,timestamp)VALUE("'.$product->getProductName().'",'.$product->getProductPrice().','.$product->getProductTimestamp().');';
+    $success = mysqli_query($this->oMysqlHandler,$sSQLString);
+    if($success == false)
+    {
+      throw new dbException(mysqli_error($this->oMysqlHandler),$sSQLString);
+    }
+  }
   public function getAllData()
   {
     //SELECT product_name,price,timestamp FROM productPriceTable
